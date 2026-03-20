@@ -48,6 +48,15 @@ app.get('/api/health', (req, res) => {
   })
 })
 
+// ─── Root Ping & Message Route ──────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Ping received! ✅ Message sent successfully.',
+    timestamp: new Date().toISOString(),
+    status: 'ok',
+  })
+})
+
 // ─── Error Handler ───────────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
   console.error(err.stack)
