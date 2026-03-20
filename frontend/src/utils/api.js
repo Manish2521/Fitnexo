@@ -1,17 +1,23 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const api = axios.create({ baseURL: '/api', timeout: 20000 })
+const API_URL = import.meta.env.VITE_API_URL;
+
+const api = axios.create({
+  baseURL: API_URL, // ✅ FIXED
+  timeout: 20000,
+  withCredentials: true
+});
 
 api.interceptors.response.use(
-  res => res,
-  err => {
+  (res) => res,
+  (err) => {
     if (err.response?.status === 401) {
-      localStorage.removeItem('fgs_token')
-      localStorage.removeItem('fgs_user')
-      window.location.href = '/login'
+      localStorage.removeItem('fgs_token');
+      localStorage.removeItem('fgs_user');
+      window.location.href = '/login';
     }
-    return Promise.reject(err)
+    return Promise.reject(err);
   }
-)
+);
 
-export default api
+export default api;
